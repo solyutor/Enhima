@@ -36,7 +36,7 @@ end
 
 desc "Build the application with msbuild"
 msbuild :msbuild => [:clean, :assemblyinfo] do |msb|
-	msb.properties :configuration => :Debug, :OutputPath => @output
+	msb.properties :configuration => :Release, :OutputPath => @output
 	msb.targets :Clean, :Build
 	msb.solution = "#{@project}.sln"
 	msb.verbosity = "quiet"
@@ -65,11 +65,10 @@ nuspec :nuspec => [:prepare_nuget] do |nuspec|
    nuspec.version = @package_version
    nuspec.authors = "Jury Soldatenkov"
    nuspec.description = @description
-   nuspec.title = "NHibernate mapping by code using predefined conventions"
    nuspec.output_file = "#{@nuget_dir}/#{@nuspec_name}"
    nuspec.projectUrl = "http://github.com/solyutor/enhima"
    nuspec.dependency "NHibernate", "3.2.0"
-   nuspec.tags NHibernate, MappingByCode
+   nuspec.tags = 'NHibernate MappingByCode MappingByConventions'
 end
 
 desc "create the nuget package"
