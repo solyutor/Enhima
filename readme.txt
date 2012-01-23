@@ -1,0 +1,1 @@
+This lightweight zero-configuration framework that helps you to map your domain in a line of code. 
