@@ -40,7 +40,7 @@ msbuild :msbuild => [:clean, :assemblyinfo] do |msb|
 	msb.targets :Clean, :Build
 	msb.solution = "#{@project}.sln"
 	msb.verbosity = "quiet"
-	#msb.parameters = "/nologo"
+	msb.parameters = "/nologo"
 end
 
 desc "Run fixtures"
@@ -69,6 +69,7 @@ nuspec :nuspec => [:prepare_nuget] do |nuspec|
    nuspec.output_file = "#{@nuget_dir}/#{@nuspec_name}"
    nuspec.projectUrl = "http://github.com/solyutor/enhima"
    nuspec.dependency "NHibernate", "3.2.0"
+   nuspec.tags NHibernate, MappingByCode
 end
 
 desc "create the nuget package"
