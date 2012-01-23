@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+	
+	<Target Name="Clean">
+		<RemoveDir Directories="build" />
+	</Target>
+	
+	<Target Name="PrepareForNuget">
+		
+		<Copy SourceFiles="build\Bin\Enhima.dll" DestinationFolder="build\nuget\lib\Net35"/>
+		<Copy SourceFiles="build\Bin\Enhima.xml" DestinationFolder="build\nuget\lib\Net35"/>
+		<Copy SourceFiles="Enhima.license.txt" DestinationFolder="build\nuget\content"/>
+	</Target>
+  
+</Project>
