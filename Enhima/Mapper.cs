@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Enhima.Conventions;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Mapping;
 using NHibernate.Mapping.ByCode;
 
 namespace Enhima
@@ -12,11 +13,14 @@ namespace Enhima
     {
         private readonly Assembly[] _assemblies;
         private readonly List<Convention> _conventions;
+        private List<IAuxiliaryDatabaseObject> _auxiliaries;
 
         public Mapper(Assembly[] assemblies)
         {
             _assemblies = assemblies;
             _conventions = new List<Convention>(12);
+            _auxiliaries = new List<IAuxiliaryDatabaseObject>(20);
+            _auxiliaries.Add(new HighLowHelper(GetType()).CreateHighLowTable);
             AppendConventions();
         }
 
@@ -55,10 +59,20 @@ namespace Enhima
             get { return _conventions.AsReadOnly(); }
         }
 
+        public IEnumerable<IAuxiliaryDatabaseObject> Auxiliaries
+        {
+            get { return _auxiliaries; }
+        }
+
         public HbmMapping CompileMappings()
         {
             AddMappings(TypesFromAddedAssemblies);
             return CompileMappingFor(TypesFromAddedAssemblies);
+        }
+
+        public void AddAuxiliaryObject(IAuxiliaryDatabaseObject dbObject)
+        {
+            _auxiliaries.Add(dbObject);
         }
     }
 }

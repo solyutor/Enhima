@@ -58,6 +58,7 @@
     <Compile Include="Conventions\Bag.cs" />
     <Compile Include="Conventions\BidirectionAssociation.cs" />
     <Compile Include="Conventions\Convention.cs" />
+    <Compile Include="Conventions\HighLowHelper.cs" />
     <Compile Include="Conventions\JoinedSubclass.cs" />
     <Compile Include="Conventions\OneToMany.cs" />
     <Compile Include="Conventions\Idbag.cs" />

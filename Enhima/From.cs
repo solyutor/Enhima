@@ -25,6 +25,11 @@ namespace Enhima
             var mapper = new Mapper(assemblies);
 
             self.AddDeserializedMapping(mapper.CompileMappings(), null);
+
+            foreach (var databaseObject in mapper.Auxiliaries)
+            {
+                self.AddAuxiliaryDatabaseObject(databaseObject);
+            }
         }
 
         /// <summary>

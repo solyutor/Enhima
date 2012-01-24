@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+using NHibernate.Cfg;
 using NHibernate.Cfg.MappingSchema;
+using NHibernate.Dialect;
 
 namespace Enhima.Tests
 {
@@ -41,6 +43,20 @@ namespace Enhima.Tests
         protected HbmJoinedSubclass JoinedMappingOf<T>()
         {
             return CompiledMappings.JoinedSubclasses.JoinedSubclass<T>();
+        }
+
+        protected Configuration ConfigureNHibernate()
+        {
+            var config = new Configuration();
+            config.DataBaseIntegration(db =>
+                                           {
+                                               db.Dialect<SQLiteDialect>();
+                                               db.LogFormattedSql = true;
+                                           })
+                ;
+
+            config.MapEntities(From.ThisApplication());
+            return config;
         }
     }
 }

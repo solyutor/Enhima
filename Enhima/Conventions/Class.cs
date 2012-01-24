@@ -1,5 +1,6 @@
 using System;
 using Enhima.Inflector;
+using NHibernate.Mapping;
 using NHibernate.Mapping.ByCode;
 
 namespace Enhima.Conventions
@@ -64,15 +65,11 @@ namespace Enhima.Conventions
 
         private void SetHiloId(IModelInspector modelInspector, Type type, IClassAttributesMapper classCustomizer)
         {
-            classCustomizer.Id(x => x.Generator(Generators.HighLow, gm =>
-                                                                    gm.Params(new
-                                                                                  {
-                                                                                      table = "HighLowGenerator",
-                                                                                      column = "NextHigh",
-                                                                                      max_lo = 49,
-                                                                                      where = String.Format("EntityName = '{0}'", type.Name)
-                                                                                  }
-                                                                        )));
+            var helper = new HighLowHelper(type);
+
+            classCustomizer.Id(x => x.Generator(Generators.HighLow, helper.MapGenerator));
+
+            Mapper.AddAuxiliaryObject(helper.InsertToHighLowTable);
         }
 
         private bool DiscriminatorIsNotRequired(Type type)
