@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Enhima.Conventions;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Mapping;
@@ -13,14 +14,13 @@ namespace Enhima
     {
         private readonly Assembly[] _assemblies;
         private readonly List<Convention> _conventions;
-        private List<IAuxiliaryDatabaseObject> _auxiliaries;
+        private List<string> _hiloInserts;
 
         public Mapper(Assembly[] assemblies)
         {
             _assemblies = assemblies;
             _conventions = new List<Convention>(12);
-            _auxiliaries = new List<IAuxiliaryDatabaseObject>(20);
-            _auxiliaries.Add(new HighLowHelper(GetType()).CreateHighLowTable);
+            _hiloInserts = new List<string>(20);
             AppendConventions();
         }
 
@@ -59,9 +59,9 @@ namespace Enhima
             get { return _conventions.AsReadOnly(); }
         }
 
-        public IEnumerable<IAuxiliaryDatabaseObject> Auxiliaries
+        public IEnumerable<string> HiloInserts
         {
-            get { return _auxiliaries; }
+            get { return _hiloInserts; }
         }
 
         public HbmMapping CompileMappings()
@@ -70,9 +70,27 @@ namespace Enhima
             return CompileMappingFor(TypesFromAddedAssemblies);
         }
 
-        public void AddAuxiliaryObject(IAuxiliaryDatabaseObject dbObject)
+        public void AddHiLoScript(string script)
         {
-            _auxiliaries.Add(dbObject);
+            if (_hiloInserts.Any(x => x.Equals(script))) return;
+
+            _hiloInserts.Add(script);
+        }
+
+        public IAuxiliaryDatabaseObject CreateAndFillHighLowTable
+        {
+            get
+            {
+                var helper = new HighLowHelper(GetType());
+                var createBuilder = new StringBuilder(helper.CreateHighLowTable, 4000);
+                
+                foreach (var hiloInsert in HiloInserts)
+                {
+                    createBuilder.AppendLine(hiloInsert);
+                }
+
+                return new SimpleAuxiliaryDatabaseObject(createBuilder.ToString(), helper.DropHighLowTable);
+            }
         }
     }
 }

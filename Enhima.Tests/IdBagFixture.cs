@@ -26,7 +26,7 @@ namespace Enhima.Tests
                                               id.generator.@class == "hilo" && //use hilo
                                               id.generator.param.Any(
                                                   x =>
-                                                  x.name == "where" && x.Text.First() == "EntityName = 'ProductsTags'") &&
+                                                  x.name == "where" && x.Text.First() == "Entity = 'ProductsTags'") &&
                                               //where set to table name
                                               id.type == "Int64"); //using long as others class identifier
         }
@@ -73,9 +73,8 @@ namespace Enhima.Tests
 
             var param = bag.collectionid.generator.param.Single(x => x.name == "where");
 
-            Assert.That(param.Text[0], Is.EqualTo("EntityName = 'ProductOpinions'"));
+            Assert.That(param.Text[0], Is.EqualTo("Entity = 'ProductOpinions'"));
                                                
         }
-
     }
 }

@@ -26,10 +26,8 @@ namespace Enhima
 
             self.AddDeserializedMapping(mapper.CompileMappings(), null);
 
-            foreach (var databaseObject in mapper.Auxiliaries)
-            {
-                self.AddAuxiliaryDatabaseObject(databaseObject);
-            }
+            self.AddAuxiliaryDatabaseObject(mapper.CreateAndFillHighLowTable);
+            
         }
 
         /// <summary>

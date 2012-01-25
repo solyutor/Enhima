@@ -7,18 +7,26 @@ namespace Enhima.Conventions
 {
     public class HighLowHelper
     {
-        private readonly Type _typeToMapHilo;
-        private IAuxiliaryDatabaseObject _insertToHighLowTable;
-        private string _whereTemplate;
+        private readonly string _entityName;
 
-        public HighLowHelper(Type typeToMapHilo)
+        private readonly string _insertToHighLowTable;
+        private readonly string _whereTemplate;
+
+        public HighLowHelper(Type entityType) :this(entityType.Name)
         {
-            _typeToMapHilo = typeToMapHilo;
-            _whereTemplate = EntityNameColumn + " = '{0}'";
-
-            var insert = String.Format("insert into {0} ({1}, {2}) values ({3}, 1)", TableName, EntityNameColumn, NextHighColumn, _typeToMapHilo.Name);
             
-            _insertToHighLowTable = new SimpleAuxiliaryDatabaseObject(insert, null);
+
+        }
+
+        public HighLowHelper(string entityName)
+        {
+            if(entityName == null)
+                throw new ArgumentNullException("entityName");
+
+            _entityName = entityName;
+            _whereTemplate = EntityColumn + " = '{0}'";
+
+            _insertToHighLowTable = String.Format("insert into {0} ({1}, {2}) values ({3}, 1)", TableName, EntityColumn, NextHighColumn, _entityName);
         }
 
         public string WhereTemplate
@@ -36,9 +44,9 @@ namespace Enhima.Conventions
             get { return "NextHigh"; }
         }
 
-        public string EntityNameColumn
+        public string EntityColumn
         {
-            get { return "EntityName"; }
+            get { return "Entity"; }
         }
 
         public long MaxLow
@@ -46,7 +54,7 @@ namespace Enhima.Conventions
             get { return 49; }
         }
 
-        public IAuxiliaryDatabaseObject InsertToHighLowTable
+        public string InsertToHighLowTable
         {
             get { return _insertToHighLowTable; }
         }
@@ -58,22 +66,47 @@ namespace Enhima.Conventions
                                            table = TableName,
                                            column = NextHighColumn,
                                            max_lo = MaxLow,
-                                           where = String.Format(WhereTemplate, _typeToMapHilo.Name)
+                                           where = String.Format(WhereTemplate, _entityName)
                                        });
 
         }
 
-        public IAuxiliaryDatabaseObject CreateHighLowTable
+        public string CreateHighLowTable
         {
             get
             {
-                var builder = new StringBuilder(4000)
-                    .AppendFormat("delete from {0}", TableName).AppendLine()
-                    .AppendFormat("alter table {0} add {1} varchar(128)", TableName, EntityNameColumn).AppendLine();
+                var builder = new StringBuilder(300)
+                    .AppendLine(DropHighLowTable)
+                    .AppendFormat("create table {0} ({1} varchar(128), {2} bigint)", TableName, EntityColumn, NextHighColumn)
+                    .AppendLine();
 
-                return new SimpleAuxiliaryDatabaseObject(builder.ToString(), null);
+                return builder.ToString();
             }
-            
+        }
+
+        public string DropHighLowTable
+        {
+            get { return string.Format("drop table {0}", TableName); }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (HighLowHelper)) return false;
+            return Equals((HighLowHelper) obj);
+        }
+
+        public bool Equals(HighLowHelper other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other._entityName, _entityName);
+        }
+
+        public override int GetHashCode()
+        {
+            return _entityName.GetHashCode();
         }
     }
 }

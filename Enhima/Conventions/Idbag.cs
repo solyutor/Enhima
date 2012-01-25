@@ -39,21 +39,18 @@ namespace Enhima.Conventions
                                   ? member.GetRootMember().DeclaringType.Name + member.ToColumnName()
                                   : BidirectionAssociation.AnalizeManyToMany(member.LocalMember).ManyToManyTablename;
 
+            var helper = new HighLowHelper(hiloRowName);
+
             propertyCustomizer.Id(idMap =>
             {
 
-                idMap.Generator(Generators.HighLow,
-                        gm => gm.Params(new
-                        {
-                            table = "HighLowGenerator",
-                            column = "NextHigh",
-                            max_lo = 49,
-                            where = String.Format("EntityName = '{0}'", hiloRowName)
-                        }));
+                idMap.Generator(Generators.HighLow, helper.MapGenerator);
 
                 idMap.Column("Id");
                 idMap.Type((IIdentifierType)NHibernateUtil.Int64);
             });
+
+            Mapper.AddHiLoScript(helper.InsertToHighLowTable);
         }
 
         private void KeyColumnNaming(IModelInspector modelInspector, PropertyPath member, IIdBagPropertiesMapper propertyCustomizer)

@@ -69,7 +69,7 @@ namespace Enhima.Conventions
 
             classCustomizer.Id(x => x.Generator(Generators.HighLow, helper.MapGenerator));
 
-            Mapper.AddAuxiliaryObject(helper.InsertToHighLowTable);
+            Mapper.AddHiLoScript(helper.InsertToHighLowTable);
         }
 
         private bool DiscriminatorIsNotRequired(Type type)
