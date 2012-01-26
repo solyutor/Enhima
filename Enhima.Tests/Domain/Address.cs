@@ -2,8 +2,8 @@
 {
     public class Address
     {
-        public string City { get; set; }
+        public virtual string City { get; set; }
 
-        public string Street { get; set; }
+        public virtual string Street { get; set; }
     }
 }

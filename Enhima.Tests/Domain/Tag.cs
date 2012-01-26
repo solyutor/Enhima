@@ -4,6 +4,6 @@ namespace Enhima.Tests.Domain
 {
     public class Tag : AggregateRoot
     {
-        public IList<Product> Products { get; set; }
+        public virtual IList<Product> Products { get; set; }
     }
 }

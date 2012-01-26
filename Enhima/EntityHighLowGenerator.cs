@@ -22,6 +22,7 @@ namespace Enhima
             var createBuilder = new StringBuilder(200);
 
             createBuilder.Append(dialect.CreateTableString)
+                .Append(" ")
                 .Append(DefaultTableName)
                 .Append(" (")
                 .AppendFormat("{0} {1} not null, ", DefaultEntityColumn, dialect.GetTypeName(new StringSqlType(100)))
@@ -43,7 +44,7 @@ namespace Enhima
 
         public static string GetInsertFor(string entityName)
         {
-            return String.Format("insert into {0} ({1}, {2}) values ({3}, 1)", DefaultTableName, DefaultEntityColumn, DefaultNextHighColumn, entityName);
+            return String.Format("insert into {0} ({1}, {2}) values ('{3}', 1)", DefaultTableName, DefaultEntityColumn, DefaultNextHighColumn, entityName);
         }
     }
 }

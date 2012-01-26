@@ -15,7 +15,7 @@
             _ownedOrder = order;
         }
 
-        public Order OwnedOrder
+        public virtual Order OwnedOrder
         {
             get { return _ownedOrder; }
         }

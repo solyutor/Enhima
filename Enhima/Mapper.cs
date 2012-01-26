@@ -77,18 +77,14 @@ namespace Enhima
             _hiloInserts.Add(script);
         }
 
-        public IAuxiliaryDatabaseObject CreateAndFillHighLowTable
+        public IEnumerable<IAuxiliaryDatabaseObject> HiloInsertObjects
         {
             get
             {
-                var createBuilder = new StringBuilder(4000);
-                
                 foreach (var hiloInsert in HiloInserts)
                 {
-                    createBuilder.AppendLine(hiloInsert);
+                    yield return new SimpleAuxiliaryDatabaseObject(hiloInsert, null);
                 }
-
-                return new SimpleAuxiliaryDatabaseObject(createBuilder.ToString(), null);
             }
         }
     }

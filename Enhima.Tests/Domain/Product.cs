@@ -14,8 +14,8 @@ namespace Enhima.Tests.Domain
 
         public virtual YesNo Active { get; set; }
 
-        public IList<Tag> Tags { get; set; }
+        public virtual IList<Tag> Tags { get; set; }
 
-        public IList<string> Opinions { get; set; }
+        public virtual IList<string> Opinions { get; set; }
     }
 }

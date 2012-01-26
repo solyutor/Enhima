@@ -2,9 +2,9 @@
 {
     public abstract class Customer
     {
-        public long Id { get; set; }
+        public virtual long Id { get; set; }
 
-        public Address DeliveryAddress { get; set; }
+        public virtual Address DeliveryAddress { get; set; }
     }
 
     public class JuristicPerson : Customer

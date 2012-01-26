@@ -3,6 +3,7 @@ using System.Linq;
 using NHibernate.Cfg;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Dialect;
+using NHibernate.Driver;
 
 namespace Enhima.Tests
 {
@@ -50,8 +51,13 @@ namespace Enhima.Tests
             var config = new Configuration();
             config.DataBaseIntegration(db =>
                                            {
-                                               db.Dialect<MsSql2008Dialect>();
+                                               db.ConnectionString = "Data Source = enhima.db; Version = 3;";
+                                               db.Driver<SQLite20Driver>();
+                                               db.Dialect<SQLiteDialect>();
                                                db.LogFormattedSql = true;
+                                               db.LogSqlInConsole = true;
+                                               db.KeywordsAutoImport = Hbm2DDLKeyWords.AutoQuote;
+                                               db.SchemaAction = SchemaAutoAction.Recreate;
                                            })
                 ;
 
