@@ -15,7 +15,7 @@ namespace Enhima
         /// </summary>
         /// <param name="self">NHibernate configuration to add mappings.</param>
         /// <param name="assemblies">Asseblies with mappings and/or entities.</param>
-        public static void MapEntities(this Configuration self, Assembly[] assemblies)
+        public static Configuration MapEntities(this Configuration self, Assembly[] assemblies)
         {
             if (self == null)
                 throw new ArgumentNullException("self");
@@ -30,6 +30,7 @@ namespace Enhima
             {
                 self.AddAuxiliaryDatabaseObject(databaseObject);    
             }
+            return self;
         }
 
         /// <summary>

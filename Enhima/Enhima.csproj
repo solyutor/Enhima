@@ -56,6 +56,7 @@
     <Compile Include="..\SolutionVersion.cs">
       <Link>Properties\SolutionVersion.cs</Link>
     </Compile>
+    <Compile Include="Configurator.cs" />
     <Compile Include="Conventions\Bag.cs" />
     <Compile Include="Conventions\BidirectionAssociation.cs" />
     <Compile Include="Conventions\Convention.cs" />

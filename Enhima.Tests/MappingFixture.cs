@@ -48,21 +48,9 @@ namespace Enhima.Tests
 
         protected Configuration ConfigureNHibernate()
         {
-            var config = new Configuration();
-            config.DataBaseIntegration(db =>
-                                           {
-                                               db.ConnectionString = "Data Source = enhima.db; Version = 3;";
-                                               db.Driver<SQLite20Driver>();
-                                               db.Dialect<SQLiteDialect>();
-                                               db.LogFormattedSql = true;
-                                               db.LogSqlInConsole = true;
-                                               db.KeywordsAutoImport = Hbm2DDLKeyWords.AutoQuote;
-                                               db.SchemaAction = SchemaAutoAction.Recreate;
-                                           })
-                ;
-
-            config.MapEntities(From.ThisApplication());
-            return config;
+            return new Configuration()
+                .ConfigureSqlite()
+                .MapEntities(From.ThisApplication());
         }
     }
 }
