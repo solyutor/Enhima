@@ -23,7 +23,7 @@ namespace Enhima.Tests
         public void IdBag_should_have_hilo_generator()
         {
             IdBagTagSide.collectionid.Satisfy(id =>
-                                              id.generator.@class == "hilo" && //use hilo
+                                              id.generator.@class == typeof(EntityHighLowGenerator).AssemblyQualifiedName && //use hilo
                                               id.generator.param.Any(
                                                   x =>
                                                   x.name == "where" && x.Text.First() == "Entity = 'ProductsTags'") &&

@@ -65,11 +65,9 @@ namespace Enhima.Conventions
 
         private void SetHiloId(IModelInspector modelInspector, Type type, IClassAttributesMapper classCustomizer)
         {
-            var helper = new HighLowHelper(type);
+            Mapper.AddHiLoScript(EntityHighLowGenerator.GetInsertFor(type));
 
-            classCustomizer.Id(x => x.Generator(Generators.HighLow, helper.MapGenerator));
-
-            Mapper.AddHiLoScript(helper.InsertToHighLowTable);
+            classCustomizer.Id(x => x.Generator(new EntityHighLowGeneratorDef(type)));
         }
 
         private bool DiscriminatorIsNotRequired(Type type)

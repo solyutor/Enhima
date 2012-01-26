@@ -50,7 +50,7 @@ namespace Enhima.Tests
             var config = new Configuration();
             config.DataBaseIntegration(db =>
                                            {
-                                               db.Dialect<SQLiteDialect>();
+                                               db.Dialect<MsSql2008Dialect>();
                                                db.LogFormattedSql = true;
                                            })
                 ;

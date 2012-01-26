@@ -81,15 +81,14 @@ namespace Enhima
         {
             get
             {
-                var helper = new HighLowHelper(GetType());
-                var createBuilder = new StringBuilder(helper.CreateHighLowTable, 4000);
+                var createBuilder = new StringBuilder(4000);
                 
                 foreach (var hiloInsert in HiloInserts)
                 {
                     createBuilder.AppendLine(hiloInsert);
                 }
 
-                return new SimpleAuxiliaryDatabaseObject(createBuilder.ToString(), helper.DropHighLowTable);
+                return new SimpleAuxiliaryDatabaseObject(createBuilder.ToString(), null);
             }
         }
     }
