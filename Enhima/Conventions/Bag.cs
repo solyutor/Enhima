@@ -10,7 +10,13 @@ namespace Enhima.Conventions
 
         private void NameKeyColumn(IModelInspector modelinspector, PropertyPath member, IBagPropertiesMapper propertycustomizer)
         {
-            propertycustomizer.Key(keyMapper => keyMapper.Column(member.GetRootMember().ReflectedType.Name + "Id"));
+            var association = BidirectionAssociation.AnalyzeManyToOne(member);
+            
+            var columnName = association.IsBidirectional
+                           ? association.ColumnNameOnCollectionSide
+                           : member.GetRootMember().ReflectedType.Name + "Id";
+
+            propertycustomizer.Key(keyMapper => keyMapper.Column(columnName));
         }
 
         public override void Attach()

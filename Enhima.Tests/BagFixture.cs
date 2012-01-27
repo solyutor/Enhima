@@ -14,10 +14,20 @@ namespace Enhima.Tests
             Assert.That(bag.key.column1, Is.EqualTo("ProductSetId"));
         }
 
-        [Test, Ignore]
+        [Test]
         public void Bag_if_bidirection_key_column_should_named_as_many_to_one_side()
         {
+            var bag = MappingOf<Customer>().Get<HbmBag>("SubCustomers");
 
+            Assert.That(bag.key.column1, Is.EqualTo("ParentId"));
+        }
+
+        [Test]
+        public void Bag_of_SubCustomers_should_be_one_to_many()
+        {
+            var bag = MappingOf<Customer>().Get<HbmBag>("SubCustomers");
+
+            Assert.That(bag.Item, Is.TypeOf<HbmOneToMany>());
         }
     }
 }

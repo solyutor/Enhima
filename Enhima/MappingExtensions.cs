@@ -38,10 +38,10 @@ namespace Enhima
             return others.Any(other => other.IsSubclassOf(self));
         }
 
-        public static bool IsComponentCollection(this MemberInfo self)
+        public static bool IsComponentCollection(this MemberInfo self, IModelInspector inspector)
         {
             var propertyType = self.GetPropertyOrFieldType();
-            return propertyType.IsGenericCollection() && propertyType.CollectionElementType().IsEntity() == false;
+            return propertyType.IsGenericCollection() && inspector.IsEntity(propertyType.CollectionElementType()) == false;
         }
 
         public static Type CollectionElementType(this Type itemType)

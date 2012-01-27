@@ -28,7 +28,7 @@ namespace Enhima.Conventions
 
         public bool IsManyToMany(MemberInfo memberInfo, bool declared)
         {
-            return declared || (memberInfo.ReflectedType.IsEntity() && IsManyToMany(memberInfo));
+            return declared || (Mapper.ModelInspector.IsEntity(memberInfo.ReflectedType) && IsManyToMany(memberInfo));
         }
 
         public static bool IsManyToMany(MemberInfo memberInfo)

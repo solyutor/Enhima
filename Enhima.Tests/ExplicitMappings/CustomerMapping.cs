@@ -8,6 +8,8 @@ namespace Enhima.Tests.ExplicitMappings
         public CustomerMapping()
         {
             Id(x => x.Id);
+
+            Bag(x => x.SubCustomers, cm => {});
         }
     }
 }

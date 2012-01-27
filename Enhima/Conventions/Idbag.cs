@@ -30,12 +30,12 @@ namespace Enhima.Conventions
 
         private bool IsIdbag(MemberInfo member, bool declared)
         {
-            return declared || (Mapper.ModelInspector.IsManyToMany(member)) || member.IsComponentCollection();
+            return declared || (Mapper.ModelInspector.IsManyToMany(member)) || member.IsComponentCollection(Mapper.ModelInspector);
         }
 
         private void IdBagHiloGenerator(IModelInspector modelInspector, PropertyPath member, IIdBagPropertiesMapper propertyCustomizer)
         {
-            var hiloRowName = member.LocalMember.IsComponentCollection()
+            var hiloRowName = member.LocalMember.IsComponentCollection(Mapper.ModelInspector)
                                   ? member.GetRootMember().DeclaringType.Name + member.ToColumnName()
                                   : BidirectionAssociation.AnalizeManyToMany(member.LocalMember).ManyToManyTablename;
 
@@ -58,7 +58,7 @@ namespace Enhima.Conventions
 
         private void IdBagTableName(IModelInspector modelInspector, PropertyPath member, IIdBagPropertiesMapper propertyCustomizer)
         {
-            if (member.LocalMember.IsComponentCollection())
+            if (member.LocalMember.IsComponentCollection(Mapper.ModelInspector))
             {
                 propertyCustomizer.Table(member.GetRootMember().DeclaringType.Name + member.ToColumnName());
             }

@@ -17,7 +17,7 @@ namespace Enhima.Conventions
 
             var collectionElementType = member.GetPropertyOrFieldType().GetGenericArguments().First();
 
-            var isOneToMany = ManyToMany.IsManyToMany(member) == false && collectionElementType.IsEntity();
+            var isOneToMany = ManyToMany.IsManyToMany(member) == false && Mapper.ModelInspector.IsEntity(collectionElementType);
             
             return  isOneToMany;
         }
