@@ -17,6 +17,8 @@ namespace Enhima.Conventions
                            : member.GetRootMember().ReflectedType.Name + "Id";
 
             propertycustomizer.Key(keyMapper => keyMapper.Column(columnName));
+
+            propertycustomizer.Inverse(association.IsBidirectional);
         }
 
         public override void Attach()
