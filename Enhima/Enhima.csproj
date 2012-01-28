@@ -61,6 +61,7 @@
     <Compile Include="Conventions\BidirectionAssociation.cs" />
     <Compile Include="Conventions\Convention.cs" />
     <Compile Include="Conventions\JoinedSubclass.cs" />
+    <Compile Include="Conventions\Map.cs" />
     <Compile Include="Conventions\OneToMany.cs" />
     <Compile Include="Conventions\Idbag.cs" />
     <Compile Include="Conventions\ManyToMany.cs" />

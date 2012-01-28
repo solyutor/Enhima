@@ -82,16 +82,20 @@ namespace Enhima.Conventions
 
         public static BidirectionAssociation AnalizeManyToMany(MemberInfo memberInfo)
         {
+            if (memberInfo.IsMap())
+            {
+                return new BidirectionAssociation((PropertyInfo)memberInfo, null);
+            }
 
             var itemType = memberInfo.GetPropertyOrFieldType().GetGenericArguments().Single();
 
-            var otherSideInterface = typeof(IEnumerable<>).MakeGenericType(memberInfo.ReflectedType);
+                var otherSideInterface = typeof (IEnumerable<>).MakeGenericType(memberInfo.ReflectedType);
 
-            var otherSide = 
-                itemType.GetProperties()
-                .SingleOrDefault(property => property.PropertyType.GetInterfaces().Any(otherSideInterface.IsAssignableFrom));
-
-            return new BidirectionAssociation((PropertyInfo) memberInfo, otherSide);
+                var otherSide =
+                    itemType.GetProperties()
+                        .SingleOrDefault(
+                            property => property.PropertyType.GetInterfaces().Any(otherSideInterface.IsAssignableFrom));
+                return new BidirectionAssociation((PropertyInfo)memberInfo, otherSide);
         }
 
         public static BidirectionAssociation AnalyzeManyToOne(PropertyPath member)

@@ -93,6 +93,7 @@
     <Compile Include="Domain\Product.cs" />
     <Compile Include="Domain\ProductSet.cs" />
     <Compile Include="ExplicitMappings\ProductSetMapping.cs" />
+    <Compile Include="MapFixture.cs" />
     <Compile Include="MappingExtensionsFixture.cs" />
     <Compile Include="ExplicitMappings\CustomerMapping.cs" />
     <Compile Include="MappingFixture.cs" />

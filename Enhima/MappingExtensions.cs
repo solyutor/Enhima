@@ -44,10 +44,16 @@ namespace Enhima
             return propertyType.IsGenericCollection() && inspector.IsEntity(propertyType.DetermineCollectionElementType()) == false;
         }
 
+        public static bool IsMap(this MemberInfo self)
+        {
+            return self.GetPropertyOrFieldType().GetGenericInterfaceTypeDefinitions().Contains(typeof (IDictionary<,>));
+        }
+
         public static bool IsNotNullable(this PropertyPath self)
         {
             return self.IsNullable() == false;
         }
+
         public static bool IsNullable(this PropertyPath self)
         {
             return self.IsNullableValueTypeProperty() || self.IsNullableReferenceType();
