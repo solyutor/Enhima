@@ -21,6 +21,14 @@ namespace Enhima.Tests
         }
 
         [Test]
+        public void Version_should_be_mapped_as_version()
+        {
+            var version = MappingOf<Product>().Version;
+            Assert.That(version, Is.Not.Null);
+            Assert.That(version.name, Is.EqualTo("Version"));
+        }
+
+        [Test]
         public void Table_names_should_be_pluralized()
         {
             CompiledMappings.RootClasses.Satisfy(

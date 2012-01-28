@@ -6,6 +6,8 @@ namespace Enhima.Tests.Domain
     {
         private string _name;
 
+        public virtual short Version { get; set; }
+        
         public virtual string Name
         {
             get { return _name ?? string.Empty; }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Enhima.Conventions;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Mapping;
@@ -14,7 +13,7 @@ namespace Enhima
     {
         private readonly Assembly[] _assemblies;
         private readonly List<Convention> _conventions;
-        private List<string> _hiloInserts;
+        private readonly List<string> _hiloInserts;
 
         public Mapper(Assembly[] assemblies)
         {
