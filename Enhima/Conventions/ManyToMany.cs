@@ -22,7 +22,7 @@ namespace Enhima.Conventions
 
         private void ApplyConventions(IModelInspector modelinspector, PropertyPath member, IManyToManyMapper collectionrelationmanytomanycustomizer)
         {
-            var itemType = member.LocalMember.GetPropertyOrFieldType().CollectionElementType();
+            var itemType = member.LocalMember.GetPropertyOrFieldType().DetermineCollectionElementType();
             collectionrelationmanytomanycustomizer.Column(itemType.Name + "Id");
         }
 

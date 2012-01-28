@@ -41,12 +41,7 @@ namespace Enhima
         public static bool IsComponentCollection(this MemberInfo self, IModelInspector inspector)
         {
             var propertyType = self.GetPropertyOrFieldType();
-            return propertyType.IsGenericCollection() && inspector.IsEntity(propertyType.CollectionElementType()) == false;
-        }
-
-        public static Type CollectionElementType(this Type itemType)
-        {
-            return itemType.GetGenericArguments().First();
+            return propertyType.IsGenericCollection() && inspector.IsEntity(propertyType.DetermineCollectionElementType()) == false;
         }
 
         public static bool IsNotNullable(this PropertyPath self)

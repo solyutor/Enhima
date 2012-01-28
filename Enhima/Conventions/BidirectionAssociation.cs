@@ -82,6 +82,7 @@ namespace Enhima.Conventions
 
         public static BidirectionAssociation AnalizeManyToMany(MemberInfo memberInfo)
         {
+
             var itemType = memberInfo.GetPropertyOrFieldType().GetGenericArguments().Single();
 
             var otherSideInterface = typeof(IEnumerable<>).MakeGenericType(memberInfo.ReflectedType);
