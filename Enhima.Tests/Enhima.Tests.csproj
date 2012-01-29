@@ -112,9 +112,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Enhima\Enhima.csproj">
+    <ProjectReference Include="..\Enhima.Entities\Enhima.Entities.csproj">
+      <Project>{D3EFDD2E-10FD-400B-A07A-7C6008D00A7A}</Project>
+      <Name>Enhima.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Enhima.Mapping\Enhima.Mapping.csproj">
       <Project>{9E5655E0-8922-4528-9525-4595BC908040}</Project>
-      <Name>Enhima</Name>
+      <Name>Enhima.Mapping</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

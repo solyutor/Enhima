@@ -8,9 +8,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4FF451
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enhima", "Enhima\Enhima.csproj", "{9E5655E0-8922-4528-9525-4595BC908040}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enhima.Tests", "Enhima.Tests\Enhima.Tests.csproj", "{6C565CBB-E90E-4D2A-B686-131830498046}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enhima.Entities", "Enhima.Entities\Enhima.Entities.csproj", "{D3EFDD2E-10FD-400B-A07A-7C6008D00A7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enhima.Mapping", "Enhima.Mapping\Enhima.Mapping.csproj", "{9E5655E0-8922-4528-9525-4595BC908040}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,18 +22,24 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9E5655E0-8922-4528-9525-4595BC908040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E5655E0-8922-4528-9525-4595BC908040}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E5655E0-8922-4528-9525-4595BC908040}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9E5655E0-8922-4528-9525-4595BC908040}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E5655E0-8922-4528-9525-4595BC908040}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9E5655E0-8922-4528-9525-4595BC908040}.Release|x86.ActiveCfg = Release|Any CPU
 		{6C565CBB-E90E-4D2A-B686-131830498046}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6C565CBB-E90E-4D2A-B686-131830498046}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C565CBB-E90E-4D2A-B686-131830498046}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{6C565CBB-E90E-4D2A-B686-131830498046}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C565CBB-E90E-4D2A-B686-131830498046}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6C565CBB-E90E-4D2A-B686-131830498046}.Release|x86.ActiveCfg = Release|Any CPU
+		{D3EFDD2E-10FD-400B-A07A-7C6008D00A7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3EFDD2E-10FD-400B-A07A-7C6008D00A7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3EFDD2E-10FD-400B-A07A-7C6008D00A7A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D3EFDD2E-10FD-400B-A07A-7C6008D00A7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3EFDD2E-10FD-400B-A07A-7C6008D00A7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3EFDD2E-10FD-400B-A07A-7C6008D00A7A}.Release|x86.ActiveCfg = Release|Any CPU
+		{9E5655E0-8922-4528-9525-4595BC908040}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E5655E0-8922-4528-9525-4595BC908040}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E5655E0-8922-4528-9525-4595BC908040}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9E5655E0-8922-4528-9525-4595BC908040}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E5655E0-8922-4528-9525-4595BC908040}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E5655E0-8922-4528-9525-4595BC908040}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

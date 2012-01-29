@@ -6,10 +6,14 @@
 	</Target>
 	
 	<Target Name="PrepareForNuget">
-		
-		<Copy SourceFiles="build\Bin\Enhima.dll" DestinationFolder="build\nuget\lib\Net35"/>
-		<Copy SourceFiles="build\Bin\Enhima.xml" DestinationFolder="build\nuget\lib\Net35"/>
-		<Copy SourceFiles="Enhima.license.txt" DestinationFolder="build\nuget\content"/>
+		<Copy SourceFiles="build\Bin\Enhima.Entities.dll" DestinationFolder="build\nuget\Enhima.Entities\lib\Net35"/>
+		<Copy SourceFiles="build\Bin\Enhima.Entities.xml" DestinationFolder="build\nuget\Enhima.Entities\lib\Net35"/>
+		<Copy SourceFiles="Enhima.license.txt" DestinationFolder="build\nuget\Enhima.Entities\content"/>
+
+	
+		<Copy SourceFiles="build\Bin\Enhima.Mapping.dll" DestinationFolder="build\nuget\Enhima.Mapping\lib\Net35"/>
+		<Copy SourceFiles="build\Bin\Enhima.Mapping.xml" DestinationFolder="build\nuget\Enhima.Mapping\lib\Net35"/>
+		<Copy SourceFiles="Enhima.license.txt" DestinationFolder="build\nuget\Enhima.Mapping\content"/>
 	</Target>
   
 </Project>

@@ -1,13 +1,17 @@
 require 'albacore'
 require 'fileutils'
 
+@project = "Enhima"
+@description = "Lightweight near zero-configuration library for easy conventional mapping for nhibernate."
+
 @build_folder = Rake.application.original_dir + "/build"
 @output = @build_folder + '/bin'
-@nuget_dir = @build_folder + "/nuget"
-@description = "Lightweight near zero-configuration library for easy conventional mapping for nhibernate."
-@project = "Enhima"
 
-task :default => [:nuspec]
+@nuget_dir = @build_folder + "/nuget"
+@nuspec_entities = "#{@project}.Entities"
+@nuspec_mapping = "#{@project}.Mapping"
+
+task :default => [:pack_mapping]
 
 msbuild :clean do |clean|
 	clean.targets :Clean
@@ -52,28 +56,47 @@ end
 
 desc "Build the application with msbuild"
 msbuild :prepare_nuget => [:nunit] do |msb|
-  msb.targets :PrepareForNuget
-  msb.solution = "Auxiliary.csproj"
-  msb.verbosity = "quiet"
-  msb.parameters = "/nologo"
+	msb.targets :PrepareForNuget
+	msb.solution = "Auxiliary.csproj"
+	msb.verbosity = "quiet"
+	msb.parameters = "/nologo"
 end
 
-desc "Creating nuspec file"
-nuspec :nuspec => [:prepare_nuget] do |nuspec|
-   @nuspec_name = "#{@project}.nuspec"
-   nuspec.id= "Enhima"
-   nuspec.version = @package_version
-   nuspec.authors = "Jury Soldatenkov"
-   nuspec.description = @description
-   nuspec.output_file = "#{@nuget_dir}/#{@nuspec_name}"
-   nuspec.projectUrl = "http://github.com/solyutor/enhima"
-   nuspec.dependency "NHibernate", "3.2.0"
-   nuspec.tags = 'NHibernate MappingByCode MappingByConventions'
+desc "Creating nuspec file for entities"
+nuspec :nuspec_entities => [:prepare_nuget] do |nuspec|
+	nuspec.id= @nuspec_entities
+	nuspec.version = @package_version
+	nuspec.authors = "Jury Soldatenkov"
+	nuspec.description = @description
+	nuspec.output_file = "#{@nuget_dir}/#{@nuspec_entities}/#{@nuspec_entities}.nuspec"
+	nuspec.projectUrl = "http://github.com/solyutor/enhima"
+	nuspec.tags = 'NHibernate MappingByCode MappingByConventions'
+end
+
+desc "Creating nuspec file for mappings"
+nuspec :nuspec_mapping => [:prepare_nuget] do |nuspec|
+	nuspec.id = @nuspec_mapping
+	nuspec.version = @package_version
+	nuspec.authors = "Jury Soldatenkov"
+	nuspec.description = @description
+	nuspec.output_file = "#{@nuget_dir}/#{@nuspec_mapping}/#{@nuspec_mapping}.nuspec"
+	nuspec.projectUrl = "http://github.com/solyutor/enhima"
+	nuspec.dependency @nuspec_entities, @package_version
+	nuspec.dependency "NHibernate", "3.2.0"
+	nuspec.tags = 'NHibernate MappingByCode MappingByConventions'
+end
+
+
+desc "create the nuget package"
+nugetpack :pack_entities => [:nuspec_entities] do |nuget|
+	nuget.command = ".nuget/nuget.exe"
+	nuget.nuspec = "#{@nuget_dir}/#{@nuspec_entities}/#{@nuspec_entities}.nuspec"
+	nuget.output = @build_folder
 end
 
 desc "create the nuget package"
-nugetpack :pack => [:nuspec] do |nuget|
-   nuget.command	= ".nuget/nuget.exe"
-   nuget.nuspec		= "#{@nuget_dir}/#{@nuspec_name}"
-   nuget.output		= @build_folder
- end
+nugetpack :pack_mapping => [:pack_entities, :nuspec_mapping] do |nuget|
+	nuget.command = ".nuget/nuget.exe"
+	nuget.nuspec = "#{@nuget_dir}/#{@nuspec_mapping}/#{@nuspec_mapping}.nuspec"
+	nuget.output = @build_folder
+end
