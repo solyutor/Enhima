@@ -45,12 +45,5 @@ namespace Enhima.Tests
         {
             return CompiledMappings.JoinedSubclasses.JoinedSubclass<T>();
         }
-
-        protected Configuration ConfigureNHibernate()
-        {
-            return new Configuration()
-                .ConfigureSqlite()
-                .MapEntities(From.ThisApplication());
-        }
     }
 }
