@@ -28,14 +28,22 @@ namespace Enhima.Tests
 
         public ISession CurrentSession
         {
-            get { return _currentSession; }
+            get
+            {
+                EnsureReady();
+                return _currentSession;
+            }
         }
 
         public IStatelessSession CurrentStatelessSession
         {
-            get { return _currentStatelessSession; }
+            get
+            {
+                EnsureReady
+                return _currentStatelessSession;
+            }
         }
-        
+
         public SQLiteInMemorySchemaMaker(Configuration configuration)
         {
             _configuration = configuration;
@@ -47,7 +55,6 @@ namespace Enhima.Tests
         public void CreateSchema()
         {
             DropSchema();
-
             OpenConnection();
             ExportSchema();
             OpenSessions();
@@ -55,11 +62,13 @@ namespace Enhima.Tests
 
         public ISession OpenSession()
         {
+            EnsureReady();
             return _sessionFactory.OpenSession(_currentConnection);
         }
 
         public IStatelessSession OpenStatelessSession()
         {
+            EnsureReady();
             return _sessionFactory.OpenStatelessSession(_currentConnection);
         }
 
@@ -71,7 +80,11 @@ namespace Enhima.Tests
 
         private void CloseConnection()
         {
-            if (_currentConnection != null) _currentConnection.Dispose();
+            if (_currentConnection != null)
+            {
+                _currentConnection.Dispose();
+                _currentConnection = null;
+            }
         }
 
         private void CloseSessions()
@@ -85,6 +98,14 @@ namespace Enhima.Tests
         {
             _currentConnection = new SQLiteConnection(Configurator.SqliteInMemoryConnnectionString);
             _currentConnection.Open();
+        }
+
+        private void EnsureReady()
+        {
+            if(_currentConnection == null)
+            {
+                ExportSchema();
+            }
         }
 
         private void ExportSchema()
