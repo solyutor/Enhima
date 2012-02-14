@@ -39,7 +39,7 @@ namespace Enhima.Tests
         {
             get
             {
-                EnsureReady
+                EnsureReady();
                 return _currentStatelessSession;
             }
         }

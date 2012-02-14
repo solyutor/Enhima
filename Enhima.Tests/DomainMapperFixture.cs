@@ -1,6 +1,7 @@
 ﻿using System;
 using Enhima.Tests.Domain;
 using NHibernate.Cfg;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Tool.hbm2ddl;
 using NUnit.Framework;
 
@@ -33,6 +34,12 @@ namespace Enhima.Tests
         public void TearDown()
         {
             _schemaMaker.DropSchema();
+        }
+
+        [Test]
+        public void Show_the_mapping()
+        {
+            Console.WriteLine(new Mapper(From.ThisApplication()).CompileMappings().AsString());
         }
 
         [Test]
