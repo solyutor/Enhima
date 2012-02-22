@@ -22,8 +22,9 @@ end
 
 desc "Generate solution version "
 assemblyinfo do |asm|
-#0.9-beta-18-g408122de9c62e64937f5c1956a27cf4af9648c12
-#to be parsed by (\d+).(\d+)-([a-zA-Z]+)-(\d+)-(.{7})
+#Assuming we have tag '0.9-beta' git describe --abbrev=64 returns 0.9-beta-18-g408122de9c62e64937f5c1956a27cf4af9648c12
+#If we have tag '0.9' git describe --abbrev=64 returns 0.9-18-g408122de9c62e64937f5c1956a27cf4af9648c12
+#It should be parsed by (\d+).(\d+)-?([a-zA-Z]*)-(\d+)-(\w{7}) to generate correct assembly and nuget package version
 
 	output = `git describe --abbrev=64`
 	output =~ /-(\d+)-(.*)/
