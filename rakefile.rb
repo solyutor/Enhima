@@ -24,16 +24,32 @@ desc "Generate solution version "
 assemblyinfo do |asm|
 #Assuming we have tag '0.9-beta' git describe --abbrev=64 returns 0.9-beta-18-g408122de9c62e64937f5c1956a27cf4af9648c12
 #If we have tag '0.9' git describe --abbrev=64 returns 0.9-18-g408122de9c62e64937f5c1956a27cf4af9648c12
-#It should be parsed by (\d+).(\d+)-?([a-zA-Z]*)-(\d+)-(\w{7}) to generate correct assembly and nuget package version
+#It should be parsed by  to generate correct assembly and nuget package version
 
 	output = `git describe --abbrev=64`
-	output =~ /-(\d+)-(.*)/
-	revision = $1 || 0
-	hash = $2
+	output =~ /(\d+).(\d+)-?([a-zA-Z]*)-(\d+)-(\w{7})/
+	major = $1
+	minor = $2
+	revision = $4 || 0
+	version_type = $3
+	hash = $5
 	
-	@version = "0.9.#{revision}"
-	@product_version = "#{@version}.#{hash}" 
-	@package_version = "#{@version}-beta"
+	puts major
+	puts minor 
+	puts revision 
+	puts version_type 
+	puts hash
+	
+	@version = "#{major}.#{minor}.#{revision}"
+	puts @version
+	@package_version = @version
+	@package_version += "-#{version_type}"  if version_type && version_type.length > 0
+	
+	@product_version = @version
+	@product_version += ("-#{version_type}"  if version_type && version_type.length > 0) + "-#{hash}"
+	
+	#@product_version = "#{@version}.#{version_type}.#{hash}" 
+	#@package_version = "#{@version}-#{version_type}"
 	
 	asm.version = @version
 	asm.file_version = @version
