@@ -27,29 +27,19 @@ assemblyinfo do |asm|
 #It should be parsed by  to generate correct assembly and nuget package version
 
 	output = `git describe --abbrev=64`
-	output =~ /(\d+).(\d+)-?([a-zA-Z]*)-(\d+)-(\w{7})/
-	major = $1
-	minor = $2
-	revision = $4 || 0
-	version_type = $3
-	hash = $5
-	
-	puts major
-	puts minor 
-	puts revision 
-	puts version_type 
-	puts hash
+	version_parts = output.match /(\d+).(\d+)-?([a-zA-Z]*)-(\d+)-(\w{7})/
+	major = version_parts[1]
+	minor = version_parts[2]
+	revision = version_parts[4] || 0
+	version_type = version_parts[3]
+	hash = version_parts[5]
 	
 	@version = "#{major}.#{minor}.#{revision}"
-	puts @version
 	@package_version = @version
-	@package_version += "-#{version_type}"  if version_type && version_type.length > 0
+	@package_version += "-#{version_type}"  if (version_type || "").length > 0
 	
 	@product_version = @version
-	@product_version += ("-#{version_type}"  if version_type && version_type.length > 0) + "-#{hash}"
-	
-	#@product_version = "#{@version}.#{version_type}.#{hash}" 
-	#@package_version = "#{@version}-#{version_type}"
+	@product_version += ("-#{version_type}"  if (version_type || "").length > 0) + "-#{hash}"
 	
 	asm.version = @version
 	asm.file_version = @version
