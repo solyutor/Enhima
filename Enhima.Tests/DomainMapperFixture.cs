@@ -11,7 +11,7 @@ namespace Enhima.Tests
     public class DomainMapperFixture 
     {
         private Configuration _config;
-        private SQLiteInMemorySchemaMaker _schemaMaker;
+        private SQLiteInMemoryTestHelper _testHelper;
 
         [TestFixtureSetUp]
         public void TestFxtureSetup()
@@ -21,19 +21,19 @@ namespace Enhima.Tests
                 .ConfigureSQLiteInMemory()
                 .MapEntities(From.ThisApplication());
 
-            _schemaMaker = new SQLiteInMemorySchemaMaker(_config);
+            _testHelper = new SQLiteInMemoryTestHelper(_config);
         }
 
         [SetUp]
         public void Setup()
         {
-            _schemaMaker.CreateSchema();
+            _testHelper.CreateSchema();
         }
 
         [TearDown]
         public void TearDown()
         {
-            _schemaMaker.DropSchema();
+            _testHelper.DropSchema();
         }
 
         [Test]
@@ -51,10 +51,10 @@ namespace Enhima.Tests
         [Test]
         public void Try_test_shema_export()
         {
-            using(var tx = _schemaMaker.CurrentSession.BeginTransaction())
+            using(var tx = _testHelper.CurrentSession.BeginTransaction())
             {
                 var product = new Product();
-                _schemaMaker.CurrentSession.Persist(product);
+                _testHelper.CurrentSession.Persist(product);
                 tx.Commit();
             }
         }
@@ -62,7 +62,7 @@ namespace Enhima.Tests
         [Test]
         public void Entity_exists_for_another_session()
         {
-            using (var  session = _schemaMaker.OpenSession())
+            using (var  session = _testHelper.OpenSession())
             using (var tx = session.BeginTransaction())
             {
                 var product = new Product {Name = "Enhima"};
@@ -70,7 +70,7 @@ namespace Enhima.Tests
                 tx.Commit();
             }
 
-            using (var session = _schemaMaker.OpenSession())
+            using (var session = _testHelper.OpenSession())
             using (var tx = session.BeginTransaction())
             {
                 var product = session.CreateQuery("from Product p where p.Name = 'Enhima'").UniqueResult<Product>();

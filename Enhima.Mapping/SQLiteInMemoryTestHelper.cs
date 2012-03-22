@@ -5,9 +5,12 @@ using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 
-namespace Enhima.Tests
+namespace Enhima
 {
-    public class SQLiteInMemorySchemaMaker : IDisposable
+    /// <summary>
+    /// Facilitate in common NHibernate-SQLite related test issues: schema creation, session and SQLite-connection management. 
+    /// </summary>
+    public class SQLiteInMemoryTestHelper : IDisposable
     {
         private readonly Configuration _configuration;
         
@@ -21,11 +24,18 @@ namespace Enhima.Tests
 
         private IStatelessSession _currentStatelessSession;
 
+        /// <summary>
+        /// Returns session factory. 
+        /// <remarks>You shouldn't use it directly, because new sessions will be opend with new SQLite in memory connection, and no data could be maintained for tests.</remarks>
+        /// </summary>
         public ISessionFactory SessionFactory
         {
             get { return _sessionFactory; }
         }
-
+        
+        /// <summary>
+        /// Returns current opened session
+        /// </summary>
         public ISession CurrentSession
         {
             get
@@ -35,6 +45,9 @@ namespace Enhima.Tests
             }
         }
 
+        /// <summary>
+        /// Return current opened stateless session
+        /// </summary>
         public IStatelessSession CurrentStatelessSession
         {
             get
@@ -44,7 +57,11 @@ namespace Enhima.Tests
             }
         }
 
-        public SQLiteInMemorySchemaMaker(Configuration configuration)
+        /// <summary>
+        /// Creates new instance of <see cref="SQLiteInMemoryTestHelper"/> on top of supplied Configuration
+        /// </summary>
+        /// <param name="configuration"></param>
+        public SQLiteInMemoryTestHelper(Configuration configuration)
         {
             _configuration = configuration;
 
@@ -52,6 +69,9 @@ namespace Enhima.Tests
             _schemaExport = new SchemaExport(_configuration);
         }
 
+        /// <summary>
+        /// Opens new SQLite connection and exports shema
+        /// </summary>
         public void CreateSchema()
         {
             DropSchema();
@@ -60,18 +80,27 @@ namespace Enhima.Tests
             OpenSessions();
         }
 
+        /// <summary>
+        /// Opens new session with current open connection
+        /// </summary>
         public ISession OpenSession()
         {
             EnsureReady();
             return _sessionFactory.OpenSession(_currentConnection);
         }
 
+        /// <summary>
+        /// Opens new stateless session with current open connection
+        /// </summary>
         public IStatelessSession OpenStatelessSession()
         {
             EnsureReady();
             return _sessionFactory.OpenStatelessSession(_currentConnection);
         }
 
+        /// <summary>
+        /// Drops a sheme and closes SQLite connetion
+        /// </summary>
         public void DropSchema()
         {
             CloseSessions();
