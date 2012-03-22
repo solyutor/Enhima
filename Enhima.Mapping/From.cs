@@ -69,12 +69,17 @@ namespace Enhima
         /// <returns></returns>
         public static Assembly[] ThisApplication()
         {
-            var applicationPrefix = Assembly.GetCallingAssembly().GetName().Name.Split('.').First();
+            var rootAssembly = Assembly.GetCallingAssembly();
+            var applicationPrefix = rootAssembly.GetName().Name.Split('.').First();
 
-            return
-                AppDomain.CurrentDomain.GetAssemblies()
-                .Where(assembly => assembly.GetName().Name.StartsWith(applicationPrefix))
-                .ToArray();
+            var leafAsseblies =
+                rootAssembly.GetReferencedAssemblies()
+                    .Where(assemblyName => assemblyName.Name.StartsWith(applicationPrefix))
+                    .Distinct()
+                    .Select(Assembly.Load)
+                    .Union(new[] {rootAssembly});
+
+            return leafAsseblies.ToArray();
         }
 
         private static Assembly[] ToArray(Assembly assembly)
