@@ -99,6 +99,7 @@
     <Compile Include="ExplicitMappings\CustomerMapping.cs" />
     <Compile Include="MappingFixture.cs" />
     <Compile Include="ManyToOneFixture.cs" />
+    <Compile Include="OneToManyFixture.cs" />
     <Compile Include="PropertyFixture.cs" />
     <Compile Include="PropertiesHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

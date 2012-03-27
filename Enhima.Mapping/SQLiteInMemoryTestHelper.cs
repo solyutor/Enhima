@@ -26,7 +26,7 @@ namespace Enhima
 
         /// <summary>
         /// Returns session factory. 
-        /// <remarks>You shouldn't use it directly, because new sessions will be opend with new SQLite in memory connection, and no data could be maintained for tests.</remarks>
+        /// <remarks>You shouldn't use it directly, because new sessions will be opened with new SQLite in memory connection, and no data could be maintained for tests.</remarks>
         /// </summary>
         public ISessionFactory SessionFactory
         {

@@ -43,6 +43,11 @@ namespace Enhima.Conventions
         {
             get
             {
+                if (OtherSide == null)
+                {
+                    return Cascade.All.Include(Cascade.DeleteOrphans);
+                }
+
                 return OtherSide.DeclaringType.IsAggregateRoot()
                            ? Cascade.None
                            : Cascade.All.Include(Cascade.DeleteOrphans);
@@ -91,10 +96,16 @@ namespace Enhima.Conventions
 
                 var otherSideInterface = typeof (IEnumerable<>).MakeGenericType(memberInfo.ReflectedType);
 
+                //has collection on the other end of association
                 var otherSide =
                     itemType.GetProperties()
-                        .SingleOrDefault(
-                            property => property.PropertyType.GetInterfaces().Any(otherSideInterface.IsAssignableFrom));
+                        //Is a collection on the other side of association
+                        .Where(property => property.PropertyType.GetInterfaces().Any(otherSideInterface.IsAssignableFrom)) 
+                        //But no the same collection!
+                        .Where(property => property.Equals(memberInfo) == false)
+                        .SingleOrDefault();
+
+                
                 return new BidirectionAssociation((PropertyInfo)memberInfo, otherSide);
         }
 

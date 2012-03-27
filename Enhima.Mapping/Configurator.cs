@@ -52,6 +52,9 @@ namespace Enhima
                                              db.KeywordsAutoImport = Hbm2DDLKeyWords.AutoQuote;
                                              db.SchemaAction = SchemaAutoAction.Recreate;
                                          });
+            
+            self.SessionFactory().GenerateStatistics();
+
             return self;
         }
     }
