@@ -81,6 +81,8 @@
     <Compile Include="From.cs" />
     <Compile Include="Inflector\EnglishInflector.cs" />
     <Compile Include="Inflector\InflectorExtensions.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="Logging\ConsoleLoggerFactory.cs" />
     <Compile Include="Mapper.cs" />
     <Compile Include="MappingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
