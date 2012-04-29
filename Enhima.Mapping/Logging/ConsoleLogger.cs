@@ -129,7 +129,7 @@ namespace Enhima.Logging
         public void Log(string level, string format, params object[] args)
         {
             var message = string.Format(format, args);
-            Console.WriteLine("{0}: [{1}] {2} {3}", _key, level, message);
+            Console.WriteLine("{0}: [{1}] {2}", _key, level, message);
         }
     }
 }
